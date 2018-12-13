@@ -28,4 +28,9 @@ getDefaultIp() {
 chcon -Rt svirt_sandbox_file_t .
 echo LOCAL_ADDRESS=$(getDefaultIp) >.env
 
+#install dependency #just for RHEL-7/CentOS-7
+which docker-compose &>/dev/null || {
+	yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+	yum install -y docker-compose
+}
 docker-compose up "$@"
